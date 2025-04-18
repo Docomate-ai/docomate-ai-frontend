@@ -6,13 +6,28 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import OtpPage from "./pages/OtpPage";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import LayoutPrimary from "./pages/layout/LayoutPrimary";
+import App from "./pages/App";
+import LayoutAuth from "./pages/layout/LayoutAuth";
+import ProjectPage from "./pages/ProjectPage";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LayoutPrimary />,
     children: [
       {
+        path: "",
+        element: <App />,
+        children: [],
+      },
+      {
         path: "auth",
+        element: <LayoutAuth />,
         children: [
           {
             path: "login",
@@ -28,12 +43,24 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "project",
+        children: [
+          {
+            path: ":id",
+            element: <ProjectPage />,
+          },
+        ],
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </StrictMode>
 );
