@@ -40,10 +40,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
-
+/* 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: rgb(228, 214, 255);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -77,7 +77,7 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: rgb(14, 0, 41);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -108,6 +108,97 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+} */
+
+:root {
+  --radius: 0.625rem;
+
+  /* Base colors */
+  --background: #f2f0ff; /* Light lavender */
+  --foreground: oklch(0.15 0.01 280); /* Deep gray */
+
+  --card: #ffffff;
+  --card-foreground: oklch(0.15 0.01 280);
+
+  --popover: #ffffff;
+  --popover-foreground: oklch(0.15 0.01 280);
+
+  --primary: #4c00ff; /* Vivid violet */
+  --primary-foreground: #ffffff;
+
+  --secondary: #f1eaff; /* Pale lavender */
+  --secondary-foreground: #4c00ff;
+
+  --muted: #f1eaff;
+  --muted-foreground: #7a6fa5; /* Muted purple-gray */
+
+  --accent: #dad1ff; /* Light periwinkle */
+  --accent-foreground: #4c00ff;
+
+  --destructive: #ff4d4f;
+  --border: #e0d7ff;
+  --input: #e0d7ff;
+  --ring: #bbadff;
+
+  /* Charts (colorful) */
+  --chart-1: #ffb7c5; /* Pinkish */
+  --chart-2: #97e4ff; /* Sky blue */
+  --chart-3: #89aaff; /* Soft indigo */
+  --chart-4: #f3b46f; /* Apricot */
+  --chart-5: #a3de83; /* Green pastel */
+
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: oklch(0.15 0.01 280);
+  --sidebar-primary: #4c00ff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dad1ff;
+  --sidebar-accent-foreground: #4c00ff;
+  --sidebar-border: #e0d7ff;
+  --sidebar-ring: #bbadff;
+}
+
+.dark {
+  --background: #0e0029; /* Very dark violet */
+  --foreground: #ffffff;
+
+  --card: #1a0b38;
+  --card-foreground: #ffffff;
+
+  --popover: #1a0b38;
+  --popover-foreground: #ffffff;
+
+  --primary: #bbadff; /* Soft lavender */
+  --primary-foreground: #1a0b38;
+
+  --secondary: #3b2a63; /* Deep purple-gray */
+  --secondary-foreground: #ffffff;
+
+  --muted: #3b2a63;
+  --muted-foreground: #bbadff;
+
+  --accent: #4c00ff;
+  --accent-foreground: #ffffff;
+
+  --destructive: #ff4d4f;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #7a6fa5;
+
+  --chart-1: #e58cb0;
+  --chart-2: #64c9e3;
+  --chart-3: #6a8eff;
+  --chart-4: #d99348;
+  --chart-5: #6fcf97;
+
+  --sidebar: #1a0b38;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #bbadff;
+  --sidebar-primary-foreground: #1a0b38;
+  --sidebar-accent: #4c00ff;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #7a6fa5;
 }
 
 @layer base {
