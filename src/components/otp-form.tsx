@@ -21,9 +21,13 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import axios from "@/lib/axios";
 
 const FormSchema = z.object({
-  pin: z.string().min(6, {
+  email: z.string().email(),
+  otp: z.string().min(6, {
     message: "Your one-time password must be 6 characters.",
   }),
 });
@@ -32,16 +36,56 @@ export function InputOTPForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      pin: "",
+      email: localStorage.getItem("email") || "",
+    },
+  });
+
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: async (formData: { email: string; otp: string }) => {
+      const response = await axios.post("/auth/verify", {
+        ...formData,
+        otp: Number(formData.otp),
+      });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      console.log("OTP verification Success:", data);
+      toast.success(
+        <div>
+          <strong>{data.message}</strong>
+        </div>
+      );
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log("OTP verfication Failed:", error.response.data.message);
+        toast.error(
+          <div>
+            <strong>{error.response.data.message}</strong>
+          </div>
+        );
+      } else {
+        console.error("Unexpected error:", error);
+        toast(
+          <div>
+            <strong>An unexpected error occurred. Please try again.</strong>
+          </div>
+        );
+      }
     },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast(
-      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-        <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-      </pre>
-    );
+    try {
+      mutation.mutate(data);
+    } catch (error) {
+      console.error("Error submitting otp form: ", error);
+    }
   }
 
   return (
@@ -55,7 +99,7 @@ export function InputOTPForm() {
         >
           <FormField
             control={form.control}
-            name="pin"
+            name="otp"
             render={({ field }) => (
               <FormItem className="flex flex-col items-center gap-3">
                 <FormLabel>One-Time Password</FormLabel>
