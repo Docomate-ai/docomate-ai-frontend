@@ -5,17 +5,19 @@ import { Outlet, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import { Toaster } from "sonner";
+import ThemeProvider from "@/context/ThemeProvider";
 
 export default function LayoutPrimary() {
   const navigate = useNavigate();
-
   const { isLoading, isError, error } = useQuery({
     queryKey: ["authCheck"],
     queryFn: async () => {
       const response = await axios.get("/auth/whoami");
       console.log(response);
-      return response.data;
+      return response;
     },
+    retry: 1,
+    staleTime: 1000 * 60 * 5,
   });
 
   // Handle navigation on error
@@ -26,21 +28,41 @@ export default function LayoutPrimary() {
     }
   }, [isError, navigate, error]);
 
+  const [themeMode, setThemeMode] = React.useState("light");
+
+  function lightTheme() {
+    setThemeMode("light");
+  }
+  function darkTheme() {
+    setThemeMode("dark");
+  }
+
+  React.useEffect(() => {
+    const html = document.querySelector("html");
+    if (html) {
+      const classList = html.classList;
+      classList.remove("light", "dark");
+      classList.add(themeMode);
+    }
+  }, [themeMode]);
+
   if (isLoading) {
     return (
       <div className="h-screen">
-        <LoadingSpinner />
+        <LoadingSpinner messages={["loading"]} />
       </div>
     );
   }
 
   return (
-    <div>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-      <Toaster position="bottom-right" richColors />
-    </div>
+    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
+      <div>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Toaster position="bottom-right" richColors />
+      </div>
+    </ThemeProvider>
   );
 }
