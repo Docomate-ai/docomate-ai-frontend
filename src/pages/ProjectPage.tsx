@@ -12,11 +12,11 @@ type Project = {
   languages: Record<string, number>;
 };
 
-// type Readme = {
-//   id: string;
-//   content: string;
-//   createdAt: string;
-// };
+type Content = {
+  contentType: string;
+  contentName: string;
+  content: string;
+};
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -38,13 +38,14 @@ export default function ProjectPage() {
     },
   });
 
-  // const { data: readmes, isLoading: isReadmesLoading } = useQuery<Readme[]>({
-  //   queryKey: ["readmes", id],
-  //   queryFn: async () => {
-  //     const res = await axios.get(`/content/${id}/readmes`);
-  //     return res.data.readmes;
-  //   },
-  // });
+  const { data: contents, isLoading: isContentLoading } = useQuery<Content[]>({
+    queryKey: ["readmes", id],
+    queryFn: async () => {
+      const res = await axios.post(`/content/${id}/contents`);
+      console.log(res.data.data);
+      return res.data.data.contents;
+    },
+  });
 
   if (isLoading) {
     return (
@@ -91,7 +92,7 @@ export default function ProjectPage() {
         <h2 className="text-xl font-semibold">Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Card
-            onClick={() => navigate(`/project/${id}/generate-readme`)}
+            onClick={() => navigate(`/project/${id}/readme-sections`)}
             className="cursor-pointer hover:shadow-lg transition"
           >
             <CardHeader>
@@ -121,31 +122,31 @@ export default function ProjectPage() {
       </div>
 
       {/* Section 2: Saved Readmes */}
-      {/* <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Saved READMEs</h2>
-        {isReadmesLoading ? (
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Contents</h2>
+        {isContentLoading ? (
           <div>Loading saved content...</div>
-        ) : readmes && readmes.length > 0 ? (
-          <div className="space-y-4">
-            {readmes.map((readme) => (
-              <Card key={readme.id}>
+        ) : contents && contents.length > 0 ? (
+          <div className="space-y-4 grid gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            {contents.map((content, ind) => (
+              <Card key={ind} className="h-[120px]">
                 <CardHeader>
                   <CardTitle className="text-sm text-muted-foreground">
-                    {new Date(readme.createdAt).toLocaleString()}
+                    {content.contentName}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <pre className="whitespace-pre-wrap text-sm text-foreground">
-                    {readme.content.slice(0, 500)}...
-                  </pre>
+                  <Badge variant="outline" className="text-sm text-foreground">
+                    {content.contentType}
+                  </Badge>
                 </CardContent>
               </Card>
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground">No saved readmes yet.</p>
+          <p className="text-muted-foreground">No saved contents yet.</p>
         )}
-      </div> */}
+      </div>
     </div>
   );
 }
