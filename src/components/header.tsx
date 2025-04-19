@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -52,19 +51,6 @@ const Header: React.FC = () => {
               className="h-14 w-auto rounded-full"
             />
           </Link>
-          {/* Navigation Menubar */}
-          <Menubar className="hidden md:flex">
-            <MenubarMenu>
-              <MenubarTrigger>
-                <Link to="/">Dashboard</Link>
-              </MenubarTrigger>
-            </MenubarMenu>
-            <MenubarMenu>
-              <MenubarTrigger>
-                <Link to="/chats">Chats</Link>
-              </MenubarTrigger>
-            </MenubarMenu>
-          </Menubar>
 
           {/* Profile Dropdown */}
           <DropdownMenu>
