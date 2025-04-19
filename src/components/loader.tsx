@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 interface LoadingSpinnerProps {
   messages?: string[];
   intervalSeconds?: number;
+  fullscreen?: boolean;
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   messages,
   intervalSeconds = 2,
+  fullscreen = false,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -27,7 +29,11 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   }, [messages, intervalSeconds]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div
+      className={`flex flex-col items-center justify-center  ${
+        fullscreen ? "w-screen h-screen absolute top-0 bg-violet-100" : ""
+      }`}
+    >
       <div className="flex flex-col items-center justify-center w-full h-full">
         {/* Pulsating Dots Animation */}
         <div className="flex space-x-2">
