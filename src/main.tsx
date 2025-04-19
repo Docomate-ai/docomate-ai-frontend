@@ -2,7 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
-// import RefreshComponent from "./pages/RefreshComponent";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import OtpPage from "./pages/OtpPage";
@@ -12,18 +11,34 @@ import LayoutPrimary from "./pages/layout/LayoutPrimary";
 import App from "./pages/App";
 import LayoutAuth from "./pages/layout/LayoutAuth";
 import ProjectPage from "./pages/ProjectPage";
+import ProfilePage from "./pages/ProfilePage";
+import ReadmeSectionPage from "./pages/ReadmeSectionsPage";
+import ReadmeResult from "./pages/ReadmeResult";
+import SettingsPage from "./pages/SettingsPage";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LayoutPrimary />,
     children: [
       {
         path: "",
-        element: <App />,
-        children: [],
+        element: <LayoutPrimary />,
+        children: [
+          {
+            path: "",
+            element: <App />,
+          },
+          {
+            path: "profile",
+            element: <ProfilePage />,
+          },
+          {
+            path: "settings",
+            element: <SettingsPage />,
+          },
+        ],
       },
       {
         path: "auth",
@@ -45,10 +60,19 @@ const router = createBrowserRouter([
       },
       {
         path: "project",
+        element: <LayoutPrimary />,
         children: [
           {
             path: ":id",
             element: <ProjectPage />,
+          },
+          {
+            path: ":id/readme-sections",
+            element: <ReadmeSectionPage />,
+          },
+          {
+            path: ":id/readme",
+            element: <ReadmeResult />,
           },
         ],
       },
