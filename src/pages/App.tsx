@@ -11,9 +11,10 @@ export default function App() {
       const projects = await axios.post("/project/projects");
       return projects.data;
     },
+    retry: 1,
   });
 
-  if (!isLoading && data) {
+  if (!isLoading) {
     console.log(data);
   }
 
@@ -27,12 +28,16 @@ export default function App() {
       <hr className="h-[1px] mt-0.5 bg-black" />
       <section>
         <header className="flex  pt-2 pb-2 justify-between">
-          <h2 className="text-2xl font-bold">Projects</h2>
+          <h2 className="text-2xl font-bold">
+            {data && data.data.projects.length === 0
+              ? "Please create project ->"
+              : "Projects"}
+          </h2>
           <CreateProjectBtn />
         </header>
         <div>
           {isLoading ? (
-            <LoadingSpinner />
+            <LoadingSpinner fullscreen={true} />
           ) : (
             <ProjectCardContainer projects={data.data.projects} />
           )}
