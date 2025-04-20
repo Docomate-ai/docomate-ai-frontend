@@ -8,7 +8,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import useTheme from "@/context/theme";
+import useTheme from "@/context/theme.context";
 
 export default function SettingsApp() {
   const { themeMode, darkTheme, lightTheme } = useTheme();

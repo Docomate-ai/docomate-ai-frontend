@@ -1,4 +1,4 @@
-import { themeContext } from "./theme";
+import { themeContext } from "./theme.context";
 
 const ThemeProvider = themeContext.Provider;
 
