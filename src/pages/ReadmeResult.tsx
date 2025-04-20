@@ -4,9 +4,11 @@ import { useParams, useSearchParams } from "react-router";
 import { useEffect, useMemo, useState } from "react";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-
+import { Button } from "@/components/ui/button";
+import { SaveContent as SaveReadme } from "@/components/save-readme";
 import { toast } from "sonner";
 import MarkdownEditor from "@/components/markdown-editor";
+import { SunMoon } from "lucide-react";
 
 type ReadmeResponse = {
   data: {
@@ -21,6 +23,8 @@ export default function ReadmeResult() {
   const [searchParams] = useSearchParams();
 
   const [markdown, setMarkdown] = useState<string>("");
+
+  const [editorMode, setEditorMode] = useState("light");
 
   const sectionsParam = searchParams.get("sections");
 
@@ -41,7 +45,6 @@ export default function ReadmeResult() {
       return res;
     },
     onSuccess: (data) => {
-      console.log("the data is: ", data.data.data.readme);
       setMarkdown(data.data?.data?.readme || "");
       toast.success("Readme generated successfully");
     },
@@ -73,13 +76,32 @@ export default function ReadmeResult() {
   }
 
   return (
-    <div className="p-6">
-      <MarkdownEditor
-        projectId={id || ""}
-        markdown={markdown}
-        setMarkdown={setMarkdown}
-        mutationStatus={mutationGenerate.status}
-      />
-    </div>
+    <>
+      <header className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold mb-4 text-center">Markdown Editor</h1>
+        <div className="flex gap-3">
+          <SaveReadme markdown={markdown} projectId={id || ""} />
+          <Button
+            className="cursor-pointer"
+            variant="secondary"
+            onClick={() =>
+              setEditorMode((editorMode) =>
+                editorMode === "light" ? "dark" : "light"
+              )
+            }
+          >
+            <SunMoon /> Editor Mode
+          </Button>
+        </div>
+      </header>
+      <div className="p-6">
+        <MarkdownEditor
+          markdown={markdown}
+          setMarkdown={setMarkdown}
+          editorMode={editorMode}
+          mutationStatus={mutationGenerate.status}
+        />
+      </div>
+    </>
   );
 }
