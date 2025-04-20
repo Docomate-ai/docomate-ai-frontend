@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import { Toaster } from "sonner";
 import ThemeProvider from "@/context/ThemeProvider";
+import ContextProvider from "@/context/ContentProvider";
 
 export default function LayoutPrimary() {
   const navigate = useNavigate();
@@ -28,15 +29,14 @@ export default function LayoutPrimary() {
     }
   }, [isError, navigate, error]);
 
+  // handling theme mode context
   const [themeMode, setThemeMode] = React.useState("light");
-
   function lightTheme() {
     setThemeMode("light");
   }
   function darkTheme() {
     setThemeMode("dark");
   }
-
   React.useEffect(() => {
     const html = document.querySelector("html");
     if (html) {
@@ -46,23 +46,33 @@ export default function LayoutPrimary() {
     }
   }, [themeMode]);
 
+  const [content, setContent] = React.useState({
+    _id: "",
+    projectId: "",
+    contentName: "",
+    contentType: "",
+    content: "",
+  });
+
   if (isLoading) {
     return (
       <div className="h-screen">
-        <LoadingSpinner messages={["loading"]} />
+        <LoadingSpinner messages={["loading"]} fullscreen={true} />
       </div>
     );
   }
 
   return (
-    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
-      <div>
-        <Header />
-        <main>
-          <Outlet />
-        </main>
-        <Toaster position="bottom-right" richColors />
-      </div>
-    </ThemeProvider>
+    <ContextProvider value={{ content, setContent }}>
+      <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
+        <div>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Toaster position="bottom-right" richColors />
+        </div>
+      </ThemeProvider>
+    </ContextProvider>
   );
 }
