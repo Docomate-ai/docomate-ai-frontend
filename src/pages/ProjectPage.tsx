@@ -17,6 +17,8 @@ type Content = {
   contentType: string;
   contentName: string;
   content: string;
+  projectId: string;
+  _id: string;
 };
 
 export default function ProjectPage() {
@@ -40,7 +42,7 @@ export default function ProjectPage() {
   });
 
   const { data: contents, isLoading: isContentLoading } = useQuery<Content[]>({
-    queryKey: ["readmes", id],
+    queryKey: ["contents", id],
     queryFn: async () => {
       const res = await axios.post(`/content/${id}/contents`);
       console.log(res.data.data);
