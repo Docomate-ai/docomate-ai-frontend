@@ -15,6 +15,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ReadmeSectionPage from "./pages/ReadmeSectionsPage";
 import ReadmeResult from "./pages/ReadmeResult";
 import SettingsPage from "./pages/SettingsPage";
+import ContentPage from "./pages/ContentPage";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
           {
             path: ":id/readme",
             element: <ReadmeResult />,
+          },
+          {
+            path: ":projectId/:contentId",
+            element: <ContentPage />,
           },
         ],
       },
