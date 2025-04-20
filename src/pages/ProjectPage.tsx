@@ -4,6 +4,7 @@ import axios from "@/lib/axios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import LoadingSpinner from "@/components/loader"; // Make sure this exists
+import ContentCard from "@/components/content-card";
 
 type Project = {
   id: string;
@@ -129,18 +130,7 @@ export default function ProjectPage() {
         ) : contents && contents.length > 0 ? (
           <div className="space-y-4 grid gap-2 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             {contents.map((content, ind) => (
-              <Card key={ind} className="h-[120px]">
-                <CardHeader>
-                  <CardTitle className="text-sm text-muted-foreground">
-                    {content.contentName}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Badge variant="outline" className="text-sm text-foreground">
-                    {content.contentType}
-                  </Badge>
-                </CardContent>
-              </Card>
+              <ContentCard key={ind} content={content} />
             ))}
           </div>
         ) : (
