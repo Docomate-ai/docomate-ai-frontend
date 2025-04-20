@@ -1,48 +1,23 @@
 import LoadingSpinner from "@/components/loader";
 import MDEditor from "@uiw/react-md-editor";
-import { Button } from "@/components/ui/button";
-import { Download, SunMoon } from "lucide-react";
-import { SaveContent as SaveReadme } from "@/components/save-readme";
-import { Dispatch, SetStateAction, useState } from "react";
+
+import { Dispatch, SetStateAction } from "react";
 
 interface MarkdownEditorProp {
-  projectId: string;
+  editorMode: string;
   markdown: string;
   setMarkdown: Dispatch<SetStateAction<string>>;
-  mutationStatus: string;
+  mutationStatus?: string;
 }
 
 export default function MarkdownEditor({
-  projectId,
   markdown,
   setMarkdown,
+  editorMode,
   mutationStatus,
 }: MarkdownEditorProp) {
-  const [editorMode, setEditorMode] = useState("light");
-
   return (
     <>
-      <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold mb-4 text-center">Markdown Editor</h1>
-        <div className="flex gap-3">
-          <SaveReadme markdown={markdown} projectId={projectId || ""} />
-          <Button className="cursor-pointer" variant="outline">
-            <Download /> Download
-          </Button>
-          <Button
-            className="cursor-pointer"
-            variant="secondary"
-            onClick={() =>
-              setEditorMode((editorMode) =>
-                editorMode === "light" ? "dark" : "light"
-              )
-            }
-          >
-            <SunMoon /> Editor Mode
-          </Button>
-        </div>
-      </header>
-
       {mutationStatus === "pending" ? (
         <LoadingSpinner
           messages={["Generating Your Readme"]}
