@@ -1,11 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import {
-  // createBrowserRouter,
-  createHashRouter,
-  RouterProvider,
-} from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import OtpPage from "./pages/OtpPage";
@@ -22,7 +18,7 @@ import ContentPage from "./pages/ContentPage";
 
 const queryClient = new QueryClient();
 
-const router = createHashRouter(
+const router = createBrowserRouter(
   [
     {
       path: "/",
