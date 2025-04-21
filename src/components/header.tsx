@@ -46,7 +46,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img
-              src="/docai-logo.png"
+              src="/docomate-ai-frontend/docai-logo.png"
               alt="Logo"
               className="h-14 w-auto rounded-full"
             />
