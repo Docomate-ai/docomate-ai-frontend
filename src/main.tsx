@@ -6,7 +6,6 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import OtpPage from "./pages/OtpPage";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import LayoutPrimary from "./pages/layout/LayoutPrimary";
 import App from "./pages/App";
 import LayoutAuth from "./pages/layout/LayoutAuth";
@@ -88,7 +87,6 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
       <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>
