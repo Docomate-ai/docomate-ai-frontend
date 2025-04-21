@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import LoadingSpinner from "@/components/loader"; // Make sure this exists
 import ContentCard from "@/components/content-card";
+import { toast } from "sonner";
 
 type Project = {
   id: string;
@@ -35,8 +36,9 @@ export default function ProjectPage() {
       const res = await axios.post(`/project/${id}`);
       if (!res.data) {
         console.error("Project data is missing or invalid.");
+        toast.error("Project data is missing or invalid.");
       }
-      console.log(res.data.data.project);
+      toast.success(res.data.message);
       return res.data.data.project;
     },
   });
@@ -45,7 +47,7 @@ export default function ProjectPage() {
     queryKey: ["contents", id],
     queryFn: async () => {
       const res = await axios.post(`/content/${id}/contents`);
-      console.log(res.data.data);
+      toast.success(res.data.message);
       return res.data.data.contents;
     },
   });

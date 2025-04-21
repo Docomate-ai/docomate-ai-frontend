@@ -14,7 +14,6 @@ export default function LayoutPrimary() {
     queryKey: ["authCheck"],
     queryFn: async () => {
       const response = await axios.get("/auth/whoami");
-      console.log(response);
       return response;
     },
     retry: 1,
@@ -24,7 +23,6 @@ export default function LayoutPrimary() {
   // Handle navigation on error
   React.useEffect(() => {
     if (isError) {
-      console.log(error);
       navigate("/auth/login");
     }
   }, [isError, navigate, error]);

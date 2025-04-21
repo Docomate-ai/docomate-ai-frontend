@@ -77,7 +77,7 @@ export default function ReadmeResult() {
 
   return (
     <>
-      <header className="flex items-center justify-between">
+      <header className="flex items-center pl-6 pr-6 pt-2 justify-between">
         <h1 className="text-2xl font-bold mb-4 text-center">Markdown Editor</h1>
         <div className="flex gap-3">
           <SaveReadme markdown={markdown} projectId={id || ""} />
@@ -94,7 +94,7 @@ export default function ReadmeResult() {
           </Button>
         </div>
       </header>
-      <div className="p-6">
+      <div className="pl-6 pr-6">
         <MarkdownEditor
           markdown={markdown}
           setMarkdown={setMarkdown}

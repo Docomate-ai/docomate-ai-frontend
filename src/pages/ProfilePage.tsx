@@ -56,11 +56,12 @@ export default function Profile() {
       const updateUser = await axios.patch("/users/update-user", data);
       return updateUser;
     },
-    onSuccess: (data) => {
-      console.log(`User updated successfully: ${data}`);
+    onSuccess: () => {
+      toast.success("Profile updated successfully");
     },
     onError: (err) => {
-      console.error(`Error updating user: ${err.message}`);
+      console.log("Error updating user:", err);
+      toast.error(`Error updating user: ${err.message}`);
     },
   });
 
@@ -70,7 +71,6 @@ export default function Profile() {
   });
 
   const onSubmit = (data: ProfileFormData) => {
-    console.log("Profile updated:", data);
     mutation.mutate(data);
     reset(data);
   };
@@ -127,7 +127,6 @@ export default function Profile() {
           <label className="block font-medium mb-2">URLs</label>
           {fields.map((field, index) => {
             const fieldError = errors.root;
-            console.log(errors.urls);
             return (
               <div key={field.id} className="mb-3">
                 <div className="flex items-center gap-2">

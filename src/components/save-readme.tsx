@@ -36,11 +36,10 @@ export function SaveContent({ projectId, markdown }: SaveReadmeProps) {
       return res.data;
     },
     onSuccess: () => {
-      console.log("readme saved succesfully");
       toast.success("Readme saved succesfully");
     },
     onError: (err) => {
-      console.error("error saving readme", err);
+      console.error("error saving readme\n", err);
       toast.error(
         <div>
           <strong>Error saving readme</strong>
