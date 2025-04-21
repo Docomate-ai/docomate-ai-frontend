@@ -18,71 +18,74 @@ import ContentPage from "./pages/ContentPage";
 
 const queryClient = new QueryClient();
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    children: [
-      {
-        path: "",
-        element: <LayoutPrimary />,
-        children: [
-          {
-            path: "",
-            element: <App />,
-          },
-          {
-            path: "profile",
-            element: <ProfilePage />,
-          },
-          {
-            path: "settings",
-            element: <SettingsPage />,
-          },
-        ],
-      },
-      {
-        path: "auth",
-        element: <LayoutAuth />,
-        children: [
-          {
-            path: "login",
-            element: <LoginPage />,
-          },
-          {
-            path: "register",
-            element: <RegisterPage />,
-          },
-          {
-            path: "verify-otp",
-            element: <OtpPage />,
-          },
-        ],
-      },
-      {
-        path: "project",
-        element: <LayoutPrimary />,
-        children: [
-          {
-            path: ":id",
-            element: <ProjectPage />,
-          },
-          {
-            path: ":id/readme-sections",
-            element: <ReadmeSectionPage />,
-          },
-          {
-            path: ":id/readme",
-            element: <ReadmeResult />,
-          },
-          {
-            path: ":projectId/:contentId",
-            element: <ContentPage />,
-          },
-        ],
-      },
-    ],
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      children: [
+        {
+          path: "",
+          element: <LayoutPrimary />,
+          children: [
+            {
+              path: "",
+              element: <App />,
+            },
+            {
+              path: "profile",
+              element: <ProfilePage />,
+            },
+            {
+              path: "settings",
+              element: <SettingsPage />,
+            },
+          ],
+        },
+        {
+          path: "auth",
+          element: <LayoutAuth />,
+          children: [
+            {
+              path: "login",
+              element: <LoginPage />,
+            },
+            {
+              path: "register",
+              element: <RegisterPage />,
+            },
+            {
+              path: "verify-otp",
+              element: <OtpPage />,
+            },
+          ],
+        },
+        {
+          path: "project",
+          element: <LayoutPrimary />,
+          children: [
+            {
+              path: ":id",
+              element: <ProjectPage />,
+            },
+            {
+              path: ":id/readme-sections",
+              element: <ReadmeSectionPage />,
+            },
+            {
+              path: ":id/readme",
+              element: <ReadmeResult />,
+            },
+            {
+              path: ":projectId/:contentId",
+              element: <ContentPage />,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  { basename: "/docomate-ai-frontend" }
+);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
