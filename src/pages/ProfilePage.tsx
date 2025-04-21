@@ -12,12 +12,18 @@ const profileSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email(),
   urls: z
-    .array(z.string().min(1, "URL is required").url("Please enter a valid URL"))
+    .array(
+      z.object({
+        value: z
+          .string()
+          .min(1, "URL is required")
+          .url("Please enter a valid URL"),
+      })
+    )
     .min(1, "At least one URL is required")
     .max(5, "At most 5 urls can be added"),
 });
 
-// Inferred TypeScript type
 type ProfileFormData = z.infer<typeof profileSchema>;
 
 export default function Profile() {
@@ -32,7 +38,7 @@ export default function Profile() {
     defaultValues: {
       name: "Gitanshu sankhla",
       email: "example@mail.com",
-      urls: ["https://github.com/Gitax18"] as string[],
+      urls: [{ value: "https://github.com/Gitax18" }],
     },
   });
 
@@ -53,7 +59,9 @@ export default function Profile() {
   const mutation = useMutation({
     mutationKey: ["user"],
     mutationFn: async (data: ProfileFormData) => {
-      const updateUser = await axios.patch("/users/update-user", data);
+      const newUrls = data.urls.map((urlObj) => urlObj.value);
+      const postBody = { ...data, urls: newUrls };
+      const updateUser = await axios.patch("/users/update-user", postBody);
       return updateUser;
     },
     onSuccess: () => {
@@ -65,7 +73,7 @@ export default function Profile() {
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<ProfileFormData>({
     control,
     name: "urls",
   });
@@ -125,37 +133,28 @@ export default function Profile() {
         {/* URLs */}
         <div>
           <label className="block font-medium mb-2">URLs</label>
-          {fields.map((field, index) => {
-            const fieldError = errors.root;
-            return (
-              <div key={field.id} className="mb-3">
-                <div className="flex items-center gap-2">
-                  <input
-                    {...register(`urls.${index}`)}
-                    placeholder="https://yourlink.com"
-                    className={`flex-1 px-4 py-2 border rounded-md bg-white dark:bg-zinc-800 ${
-                      fieldError ? "border-red-500" : ""
-                    }`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => remove(index)}
-                    className="text-red-500 hover:text-red-700 text-sm"
-                  >
-                    Remove
-                  </button>
-                </div>
-                {fieldError && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {fieldError.message}
-                  </p>
-                )}
+          {fields.map((field, index) => (
+            <div key={field.id} className="mb-3">
+              <div className="flex items-center gap-2">
+                <input
+                  {...register(`urls.${index}.value`)}
+                  placeholder="https://yourlink.com"
+                  className="flex-1 px-4 py-2 border rounded-md"
+                />
+                <button type="button" onClick={() => remove(index)}>
+                  Remove
+                </button>
               </div>
-            );
-          })}
+              {errors.urls?.[index]?.value && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.urls[index]?.value?.message}
+                </p>
+              )}
+            </div>
+          ))}
           <button
             type="button"
-            onClick={() => append("")}
+            onClick={() => append({ value: "" })}
             disabled={fields.length >= 5} // Disable button if length is 5
             className={`mt-2 text-sm transition ${
               fields.length >= 5
