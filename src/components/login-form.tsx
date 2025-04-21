@@ -40,7 +40,6 @@ export function LoginForm({
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Login Success:", data);
       toast.success(
         <div>
           <strong>{data.message}</strong>

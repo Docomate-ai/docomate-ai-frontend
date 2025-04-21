@@ -42,7 +42,7 @@ export function CreateProjectBtn() {
     },
     onSuccess: (data) => {
       toast.success("Project created successfully!");
-      console.log("Response:", data);
+      toast.success(data.message);
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       setOpen(false);
       reset();
