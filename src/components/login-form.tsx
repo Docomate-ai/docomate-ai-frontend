@@ -149,7 +149,7 @@ export function LoginForm({
           </form>
           <div className="bg-muted relative hidden md:block">
             <img
-              src="/images/login-image.png"
+              src="/docomate-ai-frontend/images/login-image.png"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover  "
             />

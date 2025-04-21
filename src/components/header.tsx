@@ -57,7 +57,7 @@ const Header: React.FC = () => {
             <DropdownMenuTrigger asChild>
               <button className="flex items-center focus:outline-none cursor-pointer">
                 <img
-                  src="/images/avatar.png"
+                  src="/docomate-ai-frontend/images/avatar.png"
                   alt="User Avatar"
                   className="h-8 w-8 rounded-full"
                 />
