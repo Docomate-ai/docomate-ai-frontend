@@ -46,7 +46,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img
-              src="/docai-logo.png"
+              src="/docomate-ai-frontend/docai-logo.png"
               alt="Logo"
               className="h-14 w-auto rounded-full"
             />
@@ -57,7 +57,7 @@ const Header: React.FC = () => {
             <DropdownMenuTrigger asChild>
               <button className="flex items-center focus:outline-none cursor-pointer">
                 <img
-                  src="/images/avatar.png"
+                  src="/docomate-ai-frontend/images/avatar.png"
                   alt="User Avatar"
                   className="h-8 w-8 rounded-full"
                 />
