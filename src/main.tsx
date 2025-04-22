@@ -1,7 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import {
+  // createBrowserRouter,
+  createHashRouter,
+  RouterProvider,
+} from "react-router";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import OtpPage from "./pages/OtpPage";
@@ -18,7 +22,7 @@ import ContentPage from "./pages/ContentPage";
 
 const queryClient = new QueryClient();
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   [
     {
       path: "/",
@@ -83,8 +87,8 @@ const router = createBrowserRouter(
         },
       ],
     },
-  ],
-  { basename: "/docomate-ai-frontend" }
+  ]
+  // { basename: "/docomate-ai-frontend" }
 );
 
 createRoot(document.getElementById("root")!).render(

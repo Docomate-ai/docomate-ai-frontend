@@ -9,7 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -141,9 +141,12 @@ export function LoginForm({
 
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <a href="register" className="underline underline-offset-4">
+                <Link
+                  to="/auth/register"
+                  className="underline underline-offset-4"
+                >
                   Register now
-                </a>
+                </Link>
               </div>
             </div>
           </form>

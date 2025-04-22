@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import axios from "@/lib/axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -155,9 +155,9 @@ export function RegisterForm({
 
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <a href="login" className="underline underline-offset-4">
+                <Link to="/auth/login" className="underline underline-offset-4">
                   Login
-                </a>
+                </Link>
               </div>
             </div>
           </form>
