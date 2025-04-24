@@ -30,8 +30,10 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 
   return (
     <div
-      className={`flex flex-col items-center justify-center  ${
-        fullscreen ? "w-screen h-screen absolute top-0 bg-violet-100" : ""
+      className={`flex flex-col items-center justify-center text-primary  ${
+        fullscreen
+          ? "w-screen h-screen absolute top-0 left-0 bg-primary overflow-hidden"
+          : ""
       }`}
     >
       <div className="flex flex-col items-center justify-center w-full h-full">
@@ -44,9 +46,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 
         {/* Rotating Messages */}
         {messages && messages.length > 0 && (
-          <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-            {messages[currentIndex]}
-          </p>
+          <p className="mt-4 text-sm text-primary">{messages[currentIndex]}</p>
         )}
       </div>
     </div>
