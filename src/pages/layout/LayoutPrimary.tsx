@@ -28,11 +28,15 @@ export default function LayoutPrimary() {
   }, [isError, navigate, error]);
 
   // handling theme mode context
-  const [themeMode, setThemeMode] = React.useState("light");
+  const [themeMode, setThemeMode] = React.useState(
+    localStorage.getItem("theme") || "light"
+  );
   function lightTheme() {
+    localStorage.setItem("theme", "light");
     setThemeMode("light");
   }
   function darkTheme() {
+    localStorage.setItem("theme", "dark");
     setThemeMode("dark");
   }
   React.useEffect(() => {
