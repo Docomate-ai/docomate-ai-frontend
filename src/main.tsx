@@ -19,7 +19,7 @@ import ReadmeSectionPage from "./pages/ReadmeSectionsPage";
 import ReadmeResult from "./pages/ReadmeResult";
 import SettingsPage from "./pages/SettingsPage";
 import ContentPage from "./pages/ContentPage";
-import ComingSoonPage from "./pages/ComingSoonPage";
+import ChatPage from "./pages/ChatPage";
 
 const queryClient = new QueryClient();
 
@@ -82,7 +82,7 @@ const router = createHashRouter(
             },
             {
               path: ":id/chat-codebase",
-              element: <ComingSoonPage />,
+              element: <ChatPage />,
             },
             {
               path: ":projectId/:contentId",
