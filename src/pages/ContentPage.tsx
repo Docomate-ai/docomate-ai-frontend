@@ -52,7 +52,7 @@ export default function ContentPage() {
 
   return (
     <div className="p-6">
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between flex-col md:flex-row">
         <h1 className="text-2xl font-bold mb-4 text-center">Markdown Editor</h1>
         <div className="flex gap-3">
           <DownloadReadme />
