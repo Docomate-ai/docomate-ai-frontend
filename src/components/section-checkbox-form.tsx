@@ -48,39 +48,48 @@ export function SectionCheckboxForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        {sectionsList.map((section) => (
-          <FormField
-            key={section.id}
-            control={form.control}
-            name="sections"
-            render={({ field }) => {
-              const isChecked = field.value?.includes(section.id);
-              return (
-                <FormItem className="flex items-start space-x-3 border p-3 rounded-md shadow">
-                  <FormControl>
-                    <Checkbox
-                      disabled={formSubmitted}
-                      checked={isChecked}
-                      onCheckedChange={(checked) => {
-                        const newValue = checked
-                          ? [...(field.value || []), section.id]
-                          : (field.value || []).filter((v) => v !== section.id);
-                        field.onChange(newValue);
-                      }}
-                    />
-                  </FormControl>
-                  <div>
-                    <FormLabel className="font-bold">{section.label}</FormLabel>
-                    <p className="text-muted-foreground text-sm">
-                      {section.description}
-                    </p>
-                  </div>
-                </FormItem>
-              );
-            }}
-          />
-        ))}
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-6 h-full flex flex-col"
+      >
+        <div className="flex-grow overflow-y-auto space-y-4">
+          {sectionsList.map((section) => (
+            <FormField
+              key={section.id}
+              control={form.control}
+              name="sections"
+              render={({ field }) => {
+                const isChecked = field.value?.includes(section.id);
+                return (
+                  <FormItem className="flex items-start space-x-3 border p-3 rounded-md shadow">
+                    <FormControl>
+                      <Checkbox
+                        disabled={formSubmitted}
+                        checked={isChecked}
+                        onCheckedChange={(checked) => {
+                          const newValue = checked
+                            ? [...(field.value || []), section.id]
+                            : (field.value || []).filter(
+                                (v) => v !== section.id
+                              );
+                          field.onChange(newValue);
+                        }}
+                      />
+                    </FormControl>
+                    <div>
+                      <FormLabel className="font-bold">
+                        {section.label}
+                      </FormLabel>
+                      <p className="text-muted-foreground text-sm">
+                        {section.description}
+                      </p>
+                    </div>
+                  </FormItem>
+                );
+              }}
+            />
+          ))}
+        </div>
         <Button type="submit" disabled={formSubmitted}>
           Continue
         </Button>
