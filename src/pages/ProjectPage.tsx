@@ -115,7 +115,7 @@ export default function ProjectPage() {
             className="cursor-pointer hover:shadow-lg transition"
           >
             <CardHeader>
-              <CardTitle>Talk with Codebase</CardTitle>
+              <CardTitle>Chat with Codebase</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
