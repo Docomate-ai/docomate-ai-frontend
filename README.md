@@ -32,6 +32,8 @@ The frontend for **DocomateAI**, a smart AI-powered documentation assistant that
     - [Readme Section Selection Page](#readme-section-selection-page)
     - [Readme Output Page](#readme-output-page)
     - [Save Readme Page with Download Btn (in Dark Mode)](#save-readme-page-with-download-btn-in-dark-mode)
+    - [Chat Page (in Dark Mode)](#chat-page-in-dark-mode)
+    - [Chat Page with response](#chat-page-with-response)
     - [Profile Page (in Dark Mode)](#profile-page-in-dark-mode)
     - [Settings Page (in Dark Mode)](#settings-page-in-dark-mode)
   - [Installation](#installation)
@@ -78,6 +80,14 @@ The frontend for **DocomateAI**, a smart AI-powered documentation assistant that
 ### Save Readme Page with Download Btn (in Dark Mode)
 
 ![Saved Readme Preview](https://res.cloudinary.com/dodtu65mt/image/upload/v1745333905/View_project_-_Dark_mode_w4yxci.png)
+
+### Chat Page (in Dark Mode)
+
+![Chat Page](https://res.cloudinary.com/dodtu65mt/image/upload/v1745514750/chat_fsrxza.png)
+
+### Chat Page with response
+
+![Chat Response](https://res.cloudinary.com/dodtu65mt/image/upload/v1745514750/chat_response_yanjmz.png)
 
 ### Profile Page (in Dark Mode)
 
