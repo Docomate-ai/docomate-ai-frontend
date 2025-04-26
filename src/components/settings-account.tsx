@@ -2,20 +2,44 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
 import { toast } from "sonner";
+
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 
 import axios from "@/lib/axios";
 import { AxiosError } from "axios";
+import DeleteButton from "./delete-btn";
+import { useNavigate } from "react-router";
 
 export default function SettingsAccount() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const navigate = useNavigate();
+  // mutation for delete account
+  const mutationDeleteAccount = useMutation({
+    mutationFn: async () => {
+      const res = await axios.delete("/users/delete");
+      return res.data;
+    },
+    onSuccess: () => {
+      localStorage.removeItem("email");
+      navigate("/");
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError && err.response?.data) {
+        console.error(err.response.data.message);
+        toast.error(err.response.data.message);
+      } else {
+        console.error(err.message);
+        toast.error(err.message);
+      }
+    },
+  });
 
-  const mutation = useMutation({
+  // mutation for change password
+  const mutationChangePassword = useMutation({
     mutationFn: async () => {
       const res = await axios.patch("/users/change-password", {
         currentPassword,
@@ -45,13 +69,11 @@ export default function SettingsAccount() {
       toast.error("password must have atleast 4 characters ");
       return;
     }
-    mutation.mutate();
+    mutationChangePassword.mutate();
   };
 
   const handleAccountDelete = () => {
-    if (confirm("Are you sure you want to delete your account?")) {
-      console.log("Account deleted");
-    }
+    mutationDeleteAccount.mutate();
   };
 
   return (
@@ -85,9 +107,10 @@ export default function SettingsAccount() {
         <Separator />
 
         <div>
-          <Button variant="destructive" onClick={handleAccountDelete}>
+          {/* <Button variant="destructive" onClick={handleAccountDelete}>
             Delete Account
-          </Button>
+          </Button> */}
+          <DeleteButton onContinue={handleAccountDelete} />
         </div>
       </CardContent>
     </Card>
