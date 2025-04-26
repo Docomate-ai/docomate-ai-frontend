@@ -5,12 +5,47 @@ import { Label } from "@/components/ui/label";
 
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+
+import axios from "@/lib/axios";
+import { AxiosError } from "axios";
 
 export default function SettingsAccount() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const res = await axios.patch("/users/change-password", {
+        currentPassword,
+        newPassword,
+      });
+
+      return res.data;
+    },
+    onSuccess: (data) => {
+      toast.success("Password updated successfully");
+      console.log(data);
+      setCurrentPassword(() => "");
+      setNewPassword(() => "");
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError && err.response?.data) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error(err.message);
+      }
+      console.log(err);
+    },
+  });
+
   const handlePasswordSave = () => {
-    console.log("Password updated:", { currentPassword, newPassword });
+    if (currentPassword.length < 4 || newPassword.length < 4) {
+      toast.error("password must have atleast 4 characters ");
+      return;
+    }
+    mutation.mutate();
   };
 
   const handleAccountDelete = () => {
