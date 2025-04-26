@@ -25,7 +25,7 @@ export default function SettingsAccount() {
     },
     onSuccess: () => {
       localStorage.removeItem("email");
-      navigate("/");
+      navigate("/auth/login");
     },
     onError: (err) => {
       if (err instanceof AxiosError && err.response?.data) {
