@@ -11,6 +11,8 @@ import { toast } from "sonner";
 const profileSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email(),
+  groqApi: z.string().optional(),
+  jinaApi: z.string().optional(),
   urls: z
     .array(
       z.object({
@@ -38,6 +40,8 @@ export default function Profile() {
     defaultValues: {
       name: "Gitanshu sankhla",
       email: "example@mail.com",
+      groqApi: "",
+      jinaApi: "",
       urls: [{ value: "https://github.com/Gitax18" }],
     },
   });
@@ -89,9 +93,26 @@ export default function Profile() {
     }
   }, [isError, queryErr]);
 
+  // useEffect(() => {
+  //   if (isFetched && !isError && data?.data?.data?.user) {
+  //     reset(data.data.data.user);
+  //   }
+  // }, [isFetched, isError, data, reset]);
+
   useEffect(() => {
     if (isFetched && !isError && data?.data?.data?.user) {
-      reset(data.data.data.user);
+      const user = data.data.data.user;
+      reset({
+        ...user,
+        groqApi: user.groqApi || "",
+        jinaApi: user.jinaApi || "",
+        urls: Array.isArray(user.urls)
+          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            user.urls.map((u: any) =>
+              typeof u === "string" ? { value: u } : u
+            )
+          : [{ value: "" }],
+      });
     }
   }, [isFetched, isError, data, reset]);
 
@@ -128,6 +149,42 @@ export default function Profile() {
             disabled
             className="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-zinc-700 text-gray-500"
           />
+        </div>
+
+        {/* Groq API */}
+        <div>
+          <label className="block font-medium mb-1">Groq API</label>
+          <input
+            {...register("groqApi")}
+            type="text"
+            className={`w-full px-4 py-2 border rounded-md bg-white dark:bg-zinc-800 ${
+              errors.groqApi ? "border-red-500" : ""
+            }`}
+            placeholder="Enter your Groq API key"
+          />
+          {errors.groqApi && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.groqApi.message}
+            </p>
+          )}
+        </div>
+
+        {/* Jina API */}
+        <div>
+          <label className="block font-medium mb-1">Jina API</label>
+          <input
+            {...register("jinaApi")}
+            type="text"
+            className={`w-full px-4 py-2 border rounded-md bg-white dark:bg-zinc-800 ${
+              errors.jinaApi ? "border-red-500" : ""
+            }`}
+            placeholder="Enter your Jina API key"
+          />
+          {errors.jinaApi && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.jinaApi.message}
+            </p>
+          )}
         </div>
 
         {/* URLs */}
